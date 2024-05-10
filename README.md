@@ -90,6 +90,7 @@ Usually, they are represented as arrays in x\*x\*x shape where x is resolution o
 5. ** If this does not make sense to you, see more detail with images from above.
 
 There is also an [example blender file](/BlenderExamples/DensityFieldExample.blend) you can play around with. If you use the default script and data, you should see the following in Blender:
+
 ![alt text](/Pictures/DensField.png)
 
 #### Create animated density fields in Blender
