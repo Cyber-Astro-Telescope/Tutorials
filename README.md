@@ -73,6 +73,10 @@ This is suitable for people who are used to python programming experience but ar
     * You will be able to see the following in the view port:
         ![alt text](/Pictures/ExampleData.png)
 
+### Create an animation of a particle
+Sometimes you have a position data of a particle and want to create an animation for it. You can do this by follow [this example script](/BlenderExamples/PositionAnimation.py).
+
+
 ## Density field data
 
 Density field data is another common data format people can use to create good visualization.
