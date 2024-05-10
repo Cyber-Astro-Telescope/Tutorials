@@ -82,7 +82,7 @@ Usually, they are represented as arrays in x\*x\*x shape where x is resolution o
 ### Create density field visualization with Python scripting in Blender
 [The example script](/BlenderExamples/DensityFeildVis.py) should be mostly self-explanatory with detailed comments. Basically, we use [OpenVDB](https://www.openvdb.org/) convert our density field data into vdb files which is commonly used in 3D softwares to visualize complex objects like clouds, smoke and file.
 
-#### Start creating particles in Blender
+#### Start creating density fields in Blender
 1. Open Blender and create a new "General" file
 2. Navigate to the Scripting workspace from the top menu.
 3. Open the script file by selecting File -> Open and navigating to the script's location, or simply paste [the example script](/BlenderExamples/DensityFeildVis.py) into a new text block.
@@ -90,8 +90,24 @@ Usually, they are represented as arrays in x\*x\*x shape where x is resolution o
 5. ** If this does not make sense to you, see more detail with images from above.
 
 There is also an [example blender file](/BlenderExamples/DensityFieldExample.blend) you can play around with. If you use the default script and data, you should see the following in Blender:
-
 ![alt text](/Pictures/DensField.png)
+
+#### Create animated density fields in Blender
+1. If you want to create a animation of your density field, save each frame of data and convert them into vdb files similar to above.
+2. Include the all the file names into the bpy.ops.object.volume_import() command, for example:
+   ```
+   bpy.ops.object.volume_import(filepath="PATH\TO\YOUR\FOLDER", directory="PATH\TO\YOUR\FOLDER",
+   files=[{"name":"0.vdb", "name":"0.vdb"}, {"name":"1.vdb", "name":"1.vdb"}, {"name":"2.vdb", "name":"2.vdb"},
+    {"name":"3.vdb", "name":"3.vdb"}, {"name":"4.vdb", "name":"4.vdb"}, {"name":"5.vdb", "name":"5.vdb"},
+   {"name":"6.vdb", "name":"6.vdb"}, {"name":"7.vdb", "name":"7.vdb"}, {"name":"8.vdb", "name":"8.vdb"},
+   {"name":"9.vdb", "name":"9.vdb"}], relative_path=True, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+   ```
+
+   OR
+   Just press "Shift + A" and select Volume -> Import OpenVDB... and then select all vdb files for each frame.
+4. When you click play in the animation panel, you should see each frame corresponde to each density field you imported
+
+
 
 ## Other useful things to look up: 
 - Blender scripting documentation
