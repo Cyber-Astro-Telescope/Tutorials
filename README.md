@@ -5,6 +5,7 @@ This repo provides examples and resources for creating visualization for astro (
   - [Blender environment setup](#blender-environment-setup)
   - [Particle Data (For small data set)](#particle-data-for-small-data-set)
     - Also useful for know how to script in blender
+  - [Use Point Cloud to Create Visualization with Large Amount of Particles](#use-point-cloud-to-create-visualization-with-large-amount-of-particles)
   - [Density field data](#density-field-data)
   - [Other useful things to look up](#other-useful-things-to-look-up)
 - Create interactive data experience on website with three.js
@@ -33,7 +34,7 @@ Usually, they contains the position information of particles along with related 
 | ------------- | ------------- | ------------- | ------------- |------------- |
 | ... | ... | ... |...| ... |
 
-### Create particle visualization with Python scripting in Blender
+### Create particle visualization with Python scripting in Blender (Get Familiar with Blender Scripting)
 
 This is suitable for people who are used to python programming experience but are overwhelmed by the thousands buttons in 3D softwares. 
 
@@ -76,6 +77,25 @@ This is suitable for people who are used to python programming experience but ar
 ### Create an animation of a particle
 Sometimes you have a position data of a particle and want to create an animation for it. You can do this by follow [this example script](/BlenderExamples/PositionAnimation.py).
 
+## Use Point Cloud to Create Visualization with Large Amount of Particles
+1. Install the open3D python Library for creating point cloud file from particle positions. (This can be done both on your own computer/cluster or in blender)
+    ```
+    pip install open3D
+    ```
+2. Use the following script to convert your particle position data into point cloud format. (The shape of the particle position should be (Number of particles, 3) and make sure you normalize your data first.)
+    ```
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(YourParticlePositions)
+    o3d.io.write_point_cloud("Output.ply", pcd)
+    ```
+3. In Blender, on the top menu, select File -> Import -> Stanford PLY (.ply) to import the Output.ply file
+
+4. You should be able to see the points in the viewport. To make the particle become actual objects in Blender, select the imported object and use Geometry Node as the following:
+    ![alt text](Pictures/PointGeometry.png)
+5. Feel free to play around with Radius parameter in the Mesh to Points (which correspondes to the size of each )
+6. If you use the [sample point cloud file](/BlenderExamples/sampleParticle.ply) (which is the subhalo positions in the [DREAMS project](https://www.dreams-project.org)), you should see this in Blender viewport:
+    ![alt text](/Pictures/DREAMsData.png)
+
 
 ## Density field data
 
@@ -99,7 +119,11 @@ There is also an [example blender file](/BlenderExamples/DensityFieldExample.ble
 
 #### Create animated density fields in Blender
 1. If you want to create a animation of your density field, save each frame of data and convert them into vdb files similar to above.
-2. Include the all the file names into the bpy.ops.object.volume_import() command, for example:
+2. Press "Shift + A" and select Volume -> Import OpenVDB... and then select all vdb files for each frame.
+
+   Or
+
+    Include the all the file names into the bpy.ops.object.volume_import() command, for example:
    ```
    bpy.ops.object.volume_import(filepath="PATH\TO\YOUR\FOLDER", directory="PATH\TO\YOUR\FOLDER",
    files=[{"name":"0.vdb", "name":"0.vdb"}, {"name":"1.vdb", "name":"1.vdb"}, {"name":"2.vdb", "name":"2.vdb"},
@@ -108,8 +132,6 @@ There is also an [example blender file](/BlenderExamples/DensityFieldExample.ble
    {"name":"9.vdb", "name":"9.vdb"}], relative_path=True, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
    ```
 
-   OR
-   Just press "Shift + A" and select Volume -> Import OpenVDB... and then select all vdb files for each frame.
 4. When you click play in the animation panel, you should see each frame corresponde to each density field you imported
 
 
