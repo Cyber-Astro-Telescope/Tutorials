@@ -51,6 +51,6 @@ grid = create_grid(data_norm, "density")
 # Not necessary, but it is recommended
 grid.transform = vdb.createLinearTransform(voxelSize=1/(data.shape[0])*5)
 
-vdb.write(root + "example.vdb", grids = grid)
+vdb.write(root + "example.vdb", grids = [grid])
 
 load_vdb("example.vdb")
