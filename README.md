@@ -7,6 +7,7 @@ This repo provides examples and resources for creating visualization for astro (
     - Also useful for know how to script in blender
   - [Use Point Cloud to Create Visualization with Large Amount of Particles](#use-point-cloud-to-create-visualization-with-large-amount-of-particles)
   - [Density field data](#density-field-data)
+  - [Run Blender Rendering on a cluster](#run-blender-rendering-on-a-cluster)
   - [Other useful things to look up](#other-useful-things-to-look-up)
 - Create interactive data experience on website with three.js
    - ... to be added
@@ -26,6 +27,7 @@ This repo provides examples and resources for creating visualization for astro (
         ```
         PS C:\Program Files\Blender Foundation\Blender 3.6\3.6\python\bin> .\python.exe -m pip install pandas
         ```    
+3. If you want to directly use Python libraries that come with Blender (pyopenvdb for example, which can be painful to install in some environments), you can also use the python in your blender folder.
 ## Particle Data (For small data set)
 Particle data is common in astronomical simulations.
 
@@ -84,6 +86,7 @@ Sometimes you have a position data of a particle and want to create an animation
     ```
 2. Use the following script to convert your particle position data into point cloud format. (The shape of the particle position should be (Number of particles, 3) and make sure you normalize your data first.)
     ```
+    import open3d as o3d
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(YourParticlePositions)
     o3d.io.write_point_cloud("Output.ply", pcd)
@@ -134,7 +137,16 @@ There is also an [example blender file](/BlenderExamples/DensityFieldExample.ble
 
 4. When you click play in the animation panel, you should see each frame corresponde to each density field you imported
 
-
+## Run Blender Rendering on a cluster
+Sometimes, rendering images or animations can be heavy or take a long time on your local computer. Fortunately, Blender rendering can be easily run on clusters.
+1. Download the Linux version of Blender on your cluster using the links provided on http://blender.org. For example, use the following command to download Blender 4.2
+    ```
+    wget https://mirror.freedif.org/blender/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz
+    ```
+2. Unzip the tar.xz file. For example:
+    ```
+    tar -xf blender-4.2.0-linux-x64.tar.xz
+    ```
 
 ## Other useful things to look up: 
 - Blender scripting documentation
