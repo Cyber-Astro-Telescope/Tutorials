@@ -106,6 +106,23 @@ Density field data is another common data format people can use to create good v
 
 Usually, they are represented as arrays in x\*x\*x shape where x is resolution of the field.
 
+If you want to see how to create density field from particle positions, I recommend the Pylians Package by Francisco Villaescusa-Navarro. You can see an example at https://pylians3.readthedocs.io/en/master/construction.html#density-field-in-3d. Here is our sample function for creating density field using this package:
+ ```
+import MAS_library as MASL
+
+def createDensityField(pos):
+    grid    = 256    #the 3D field will have grid x grid x grid voxels
+    BoxSize = 45     #Mpc/h ; size of box
+    MAS     = 'CIC'  #mass-assigment scheme
+    verbose = True   #print information on progress
+
+    delta = np.zeros((grid,grid,grid), dtype=np.float32)
+    MASL.MA(pos, delta, BoxSize, MAS, verbose=verbose)
+
+    return delta
+```
+ 
+
 ### Create density field visualization with Python scripting in Blender
 [The example script](/BlenderExamples/DensityFeildVis.py) should be mostly self-explanatory with detailed comments. Basically, we use [OpenVDB](https://www.openvdb.org/) convert our density field data into vdb files which is commonly used in 3D softwares to visualize complex objects like clouds, smoke and file.
 
@@ -147,6 +164,16 @@ Sometimes, rendering images or animations can be heavy or take a long time on yo
     ```
     tar -xf blender-4.2.0-linux-x64.tar.xz
     ```
+3. And you get Blender on your cluster! Use the blender executable inside the unzipped folder to run your program. After uploading your .blend file to the cluster, you can run the following commands to Rendering for example:
+    ```
+    # Render the first frame
+    ./blender-4.2.0-linux-x64/blender -b file.blend -f 1
+    # Render the animaiton
+    ./blender-4.2.0-linux-x64/blender -b file.blend -a
+    ```
+4. See more details at https://docs.blender.org/manual/en/latest/advanced/command_line/render.html
+
+** Make sure you specify the output path for your output image/video file. If you are using .vdb file/files, make sure you also copy those files to the cluster and change the .vdb file/files accordingly in your .blend file.
 
 ## Other useful things to look up: 
 - Blender scripting documentation
